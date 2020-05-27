@@ -1,5 +1,6 @@
 package app;
 
+import com.fizzed.rocker.runtime.RockerRuntime;
 import io.jooby.Jooby;
 import io.jooby.rocker.RockerModule;
 
@@ -10,6 +11,8 @@ public class App extends Jooby {
 
   {
     install(new RockerModule());
+    RockerRuntime.getInstance().setReloading(true);
+
     Path assets = Paths.get("assets");
     assets("/assets/?*", assets);
 

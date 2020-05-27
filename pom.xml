@@ -36,6 +36,13 @@
       <artifactId>jooby-rocker</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>com.fizzed</groupId>
+      <artifactId>rocker-compiler</artifactId>
+      <version>1.2.5</version>
+      <scope>provided</scope>
+    </dependency>
+
     <!-- Encryption -->
     <dependency>
       <groupId>org.mindrot</groupId>
@@ -119,6 +126,14 @@
         <groupId>io.jooby</groupId>
         <artifactId>jooby-maven-plugin</artifactId>
         <version>${jooby.version}</version>
+        <configuration>
+          <compileExtensions>java,html</compileExtensions>
+          <includes>
+            <include>**/*.class</include>
+            <include>**/*.conf</include>
+            <include>**/*.properties</include>
+          </includes>
+        </configuration>
       </plugin>
       <!-- Build uber jar -->
       <plugin>
@@ -161,6 +176,8 @@
             </goals>
             <configuration>
               <javaVersion>11</javaVersion>
+              <touchFile>pom.xml</touchFile>
+              <optimize>false</optimize>
             </configuration>
           </execution>
         </executions>

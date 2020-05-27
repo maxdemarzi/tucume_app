@@ -43,6 +43,11 @@
       <scope>provided</scope>
     </dependency>
 
+    <!-- Errors -->
+    <dependency>
+      <groupId>io.jooby</groupId>
+      <artifactId>jooby-whoops</artifactId>
+    </dependency>
     <!-- Encryption -->
     <dependency>
       <groupId>org.mindrot</groupId>

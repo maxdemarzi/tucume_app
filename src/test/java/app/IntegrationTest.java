@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @JoobyTest(App.class)
 public class IntegrationTest {
@@ -17,13 +17,27 @@ public class IntegrationTest {
   static OkHttpClient client = new OkHttpClient();
 
   @Test
-  public void shouldSayHi(int serverPort) throws IOException {
+  public void shouldGetHomePage() throws IOException {
     Request req = new Request.Builder()
-        .url("http://localhost:" + serverPort)
+            .url("http://localhost:8911")
+            .build();
+
+    try (Response rsp = client.newCall(req).execute()) {
+      assertNotNull(rsp.body());
+      assertTrue(rsp.body().string().contains("Tucume"));
+      assertEquals(StatusCode.OK.value(), rsp.code());
+    }
+  }
+
+  @Test
+  public void shouldSayAbout() throws IOException {
+    Request req = new Request.Builder()
+        .url("http://localhost:8911/about")
         .build();
 
     try (Response rsp = client.newCall(req).execute()) {
-      assertEquals("Welcome to Jooby!", rsp.body().string());
+      assertNotNull(rsp.body());
+      assertTrue(rsp.body().string().contains("About"));
       assertEquals(StatusCode.OK.value(), rsp.code());
     }
   }

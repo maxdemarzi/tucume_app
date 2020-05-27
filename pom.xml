@@ -5,30 +5,58 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>myapp</artifactId>
+  <artifactId>tucu.me</artifactId>
   <groupId>app</groupId>
   <version>1.0.0</version>
 
-  <name>myapp</name>
+  <name>Tucume</name>
 
   <properties>
     <!-- Startup class -->
     <application.class>app.App</application.class>
 
     <jooby.version>2.8.4</jooby.version>
-
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <bcrypt.version>0.4</bcrypt.version>
+    <neo4j.driver.version>4.0.1</neo4j.driver.version>
+    <neo4j.version>4.0.4</neo4j.version>
     <maven.compiler.parameters>true</maven.compiler.parameters>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
+    <!-- Web Server -->
     <dependency>
       <groupId>io.jooby</groupId>
       <artifactId>jooby-netty</artifactId>
     </dependency>
 
+    <!-- Template -->
+    <dependency>
+      <groupId>io.jooby</groupId>
+      <artifactId>jooby-rocker</artifactId>
+    </dependency>
+
+    <!-- Encryption -->
+    <dependency>
+      <groupId>org.mindrot</groupId>
+      <artifactId>jbcrypt</artifactId>
+      <version>${bcrypt.version}</version>
+    </dependency>
+
+    <!-- Neo4j -->
+    <dependency>
+      <groupId>org.neo4j.driver</groupId>
+      <artifactId>neo4j-java-driver</artifactId>
+      <version>${neo4j.driver.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.neo4j</groupId>
+      <artifactId>neo4j-collections</artifactId>
+      <version>${neo4j.version}</version>
+    </dependency>
+    
+    <!-- Logging -->
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
@@ -72,6 +100,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
+          <release>11</release>
           <annotationProcessorPaths>
             <path>
               <groupId>io.jooby</groupId>
@@ -112,6 +141,26 @@
                   <mainClass>${application.class}</mainClass>
                 </transformer>
               </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.fizzed</groupId>
+        <artifactId>rocker-maven-plugin</artifactId>
+        <version>1.2.5</version>
+        <configuration>
+          <templateDirectory>src/rocker</templateDirectory>
+        </configuration>
+        <executions>
+          <execution>
+            <id>generate-rocker-templates</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <javaVersion>11</javaVersion>
             </configuration>
           </execution>
         </executions>

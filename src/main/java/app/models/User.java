@@ -1,16 +1,17 @@
 package app.models;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class User {
-    private String username;
-    private String name;
-    private String email;
+    public String username;
+    public String name;
+    public String email;
     public String password;
     private String hash;
-    private Long time;
+    private ZonedDateTime time;
     private Integer likes;
     private Integer posts;
     private Integer followers;

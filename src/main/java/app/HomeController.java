@@ -4,7 +4,10 @@ import app.models.User;
 import app.neo4j.Neo4jQueries;
 import io.jooby.Context;
 import io.jooby.StatusCode;
-import io.jooby.annotations.*;
+import io.jooby.annotations.FormParam;
+import io.jooby.annotations.GET;
+import io.jooby.annotations.POST;
+import io.jooby.annotations.Path;
 import io.jooby.exception.StatusCodeException;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -39,7 +42,7 @@ public class HomeController {
     parameters.put("password", password);
     parameters.put("name", name);
     parameters.put("email", email);
-    User user = Neo4jQueries.createUser(parameters);
+    User user = Neo4jQueries.usersCreate(parameters);
     if (user != null) {
       return context.sendRedirect("/signin");
     } else {

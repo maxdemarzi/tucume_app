@@ -1,5 +1,6 @@
 package app;
 
+import app.models.User;
 import app.neo4j.Neo4jAuthenticator;
 import app.neo4j.Neo4jExtension;
 import com.fizzed.rocker.runtime.RockerRuntime;
@@ -13,6 +14,8 @@ import org.pac4j.http.client.indirect.FormClient;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
+
+import static app.neo4j.Neo4jQueries.usersProfile;
 
 public class App extends Jooby {
 
@@ -56,14 +59,32 @@ public class App extends Jooby {
     mvc(new FooterController());
     mvc(new HomeController());
 
+    get("/before", ctx -> {
+      User authenticated = getAuthenticated(ctx);
+      if (authenticated == null) {
+        return "Hello anonymous";
+      }
+      return "Hello " + authenticated.username;
+    });
+
     install(new Pac4jModule().client("*", conf -> new FormClient("/signin", new Neo4jAuthenticator())) );
+
     get("/home", ctx -> {
       UserProfile user = ctx.getUser();
       return "Hello " + user.getId();
     });
 
-    //FormClient formClient = new FormClient("http://localhost:8080/theForm.jsp", new SimpleTestUsernamePasswordAuthenticator(), new UsernameProfileCreator());
-    //use(new Auth().form("*", Neo4jAuthenticator.class));
+
+
+  }
+
+  private User getAuthenticated(Context ctx) {
+    User authenticated = null;
+    UserProfile unauthenticated = ctx.getUser();
+    if(unauthenticated != null) {
+       authenticated = usersProfile(unauthenticated.getId(), null);
+    }
+    return authenticated;
   }
 
   public static void main(final String[] args) {

@@ -10,6 +10,8 @@ import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.core.util.CommonHelper;
 import org.pac4j.core.util.Pac4jConstants;
 
+import static app.models.User.NAME;
+
 public class Neo4jAuthenticator implements Authenticator<UsernamePasswordCredentials> {
 
     @Override
@@ -26,14 +28,15 @@ public class Neo4jAuthenticator implements Authenticator<UsernamePasswordCredent
             throw new CredentialsException("Password cannot be blank");
         }
 
-        User user = Neo4jQueries.getUser(username);
+        User user = Neo4jQueries.usersGet(username);
 
-        if (BCrypt.checkpw(password, user.password)) {
+        if (!BCrypt.checkpw(password, user.password)) {
             throw new CredentialsException("Username : '" + username + "' does not match password");
         }
         final CommonProfile profile = new CommonProfile();
         profile.setId(username);
         profile.addAttribute(Pac4jConstants.USERNAME, username);
+        profile.addAttribute(NAME, user.name);
         credentials.setUserProfile(profile);
     }
 

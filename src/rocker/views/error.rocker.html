@@ -1,3 +1,5 @@
+@args (String code, String error)
+
 @views.partials._head.template()
 
 <body>
@@ -6,11 +8,13 @@
         <div class="row justify-content-center">
             <div class="col-xl-5 col-lg-6 col-md-7">
                 <div class="text-center">
-                    <img src="assets/images/logo.webp" alt="Tucume Logo">
-                    <h1 class="display-1 text-secondary">About Tucume</h1>
-                    <div>
-                        <p>The about page.</p>
-                    </div>
+                    <h1 class="display-1 text-primary">@raw(code)</h1>
+                    <p>
+                        @error
+                    </p>
+                    <p>
+                        <a href="index.html">Click here to go home</a>.
+                    </p>
                 </div>
             </div>
         </div>

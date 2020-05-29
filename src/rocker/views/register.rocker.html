@@ -6,19 +6,22 @@
         <div class="row justify-content-center">
             <div class="col-xl-5 col-lg-6 col-md-7">
                 <div class="text-center">
-                    <img src="assets/images/logo.png">
+                    <img src="assets/images/logo.webp" alt="Tucume Logo">
                     <h1 class="display-1 text-secondary">Tucume</h1>
                     <p class="lead">Create your account</p>
                     <hr>
-                    <form>
+                    <form action="/register" method="POST">
                         <div class="form-group">
-                            <input class="form-control" type="email" placeholder="Email Address" name="create-account-email" />
+                            <input class="form-control" type="text" placeholder="Username" name="username" />
                         </div>
                         <div class="form-group">
-                            <input class="form-control" type="password" placeholder="Password" name="create-account-password" />
-                            <div class="text-left">
-                                <small>Your password should be at least 8 characters</small>
-                            </div>
+                            <input class="form-control" type="password" placeholder="Password" name="password" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="text" placeholder="Display Name" name="name" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="email" placeholder="Email Address" name="email" />
                         </div>
                         <button class="btn btn-lg btn-block btn-primary" role="button" type="submit">
                             Create account

@@ -30,6 +30,12 @@
       <artifactId>jooby-netty</artifactId>
     </dependency>
 
+    <!-- Authentication -->
+    <dependency>
+      <groupId>io.jooby</groupId>
+      <artifactId>jooby-pac4j</artifactId>
+    </dependency>
+
     <!-- Template -->
     <dependency>
       <groupId>io.jooby</groupId>
